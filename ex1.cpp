@@ -1,22 +1,83 @@
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-template <class T>
-double average(T arr[], int size) {
-    double sum = 0;
-    for(int i=0;i<size;i++) sum += arr[i];
-    return sum/size;
-}
+class publication
+{
+protected:
+    string title;
+    float price;
+public:
+    virtual void getdata()
+    {
+        cin.ignore();
+        getline(cin, title);
+        cin >> price;
+    }
+    virtual void putdata()
+    {
+        cout << title << " " << price;
+    }
+    virtual ~publication() {}
+};
 
-int main() {
-    int a[] = {1,2,3,4};
-    long b[] = {10,20,30};
-    double c[] = {1.1,2.2,3.3};
-    char d[] = {'a','b','c'};
+class book : public publication
+{
+    int pages;
+public:
+    void getdata()
+    {
+        publication::getdata();
+        cin >> pages;
+    }
+    void putdata()
+    {
+        publication::putdata();
+        cout << " " << pages << endl;
+    }
+};
 
-    cout << average(a,4) << endl;
-    cout << average(b,3) << endl;
-    cout << average(c,3) << endl;
-    cout << average(d,3) << endl;
+class tape : public publication
+{
+    float minutes;
+public:
+    void getdata()
+    {
+        publication::getdata();
+        cin >> minutes;
+    }
+    void putdata()
+    {
+        publication::putdata();
+        cout << " " << minutes << endl;
+    }
+};
+
+int main()
+{
+    publication* pubarr[10];
+    int n = 0;
+    char choice;
+
+    do
+    {
+        cout << "b or t: ";
+        cin >> choice;
+
+        if(choice == 'b')
+            pubarr[n] = new book;
+        else
+            pubarr[n] = new tape;
+
+        pubarr[n++]->getdata();
+
+        cout << "continue? y/n: ";
+        cin >> choice;
+    } while(choice == 'y');
+
+    for(int i = 0; i < n; i++)
+        pubarr[i]->putdata();
+
+    return 0;
 }

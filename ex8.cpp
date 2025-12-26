@@ -2,22 +2,33 @@
 #include <iostream>
 using namespace std;
 
-class BoundsError {};
-
-class SafeArray {
-    int arr[5];
+class horse
+{
+protected:
+    float position;
 public:
-    int& operator[](int i) {
-        if(i<0||i>=5) throw BoundsError();
-        return arr[i];
+    horse() : position(0) {}
+    virtual void horse_tick()
+    {
+        position += 0.05;
+    }
+    float getPos() { return position; }
+};
+
+class comhorse : public horse
+{
+public:
+    void horse_tick()
+    {
+        position += 0.08;
     }
 };
 
-int main() {
-    SafeArray a;
-    try {
-        a[10]=3;
-    } catch(BoundsError) {
-        cout<<"Out of bounds";
-    }
+int main()
+{
+    horse* h = new comhorse;
+    for(int i = 0; i < 10; i++)
+        h->horse_tick();
+    cout << h->getPos();
+    return 0;
 }

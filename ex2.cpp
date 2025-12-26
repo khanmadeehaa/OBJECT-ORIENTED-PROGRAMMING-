@@ -1,28 +1,37 @@
 
+
 #include <iostream>
 using namespace std;
 
-template <class T>
-class Queue {
-    T* arr;
-    int head, tail, size;
+class Distance
+{
+    int feet;
+    float inches;
 public:
-    Queue(int s):size(s),head(0),tail(0) {
-        arr = new T[size];
+    Distance() : feet(0), inches(0) {}
+    Distance(float flt)
+    {
+        feet = int(flt);
+        inches = (flt - feet) * 12;
     }
-    void push(T v) {
-        arr[tail++] = v;
-        if(tail==size) tail=0;
-    }
-    T pop() {
-        T v = arr[head++];
-        if(head==size) head=0;
-        return v;
+    friend Distance operator*(float, Distance);
+    void show()
+    {
+        cout << feet << " " << inches << endl;
     }
 };
 
-int main() {
-    Queue<int> q(5);
-    q.push(1); q.push(2); q.push(3);
-    cout<<q.pop()<<q.pop()<<q.pop();
+Distance operator*(float f, Distance d)
+{
+    float total = f * (d.feet + d.inches/12);
+    return Distance(total);
 }
+
+int main()
+{
+    Distance d1(5.5);
+    Distance d2 = 7.5 * d1;
+    d2.show();
+    return 0;
+}
+

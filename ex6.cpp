@@ -1,21 +1,31 @@
-
 #include <iostream>
+#include <cmath>
 using namespace std;
 
-template <class T>
-class SafeArray {
-    T arr[10];
+class bMoney
+{
+    long double amount;
 public:
-    T& operator[](int i) {
-        if(i<0||i>=10) {
-            cout<<"Index Error"; exit(1);
-        }
-        return arr[i];
+    bMoney(long double a = 0) : amount(a) {}
+    friend bMoney round(bMoney);
+    void show()
+    {
+        cout << amount << endl;
     }
 };
 
-int main() {
-    SafeArray<int> a;
-    a[0]=10;
-    cout<<a[0];
+bMoney round(bMoney m)
+{
+    long double ip;
+    long double frac = modfl(m.amount, &ip);
+    if(frac >= 0.5)
+        ip += 1.0;
+    return bMoney(ip);
+}
+
+int main()
+{
+    bMoney m1(10.75);
+    round(m1).show();
+    return 0;
 }

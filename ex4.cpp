@@ -1,14 +1,69 @@
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-template <class T>
-void swaps(T& a, T& b) {
-    T t=a; a=b; b=t;
-}
+class publication
+{
+protected:
+    string title;
+    float price;
+public:
+    virtual bool isOversize() = 0;
+    virtual void getdata() {}
+    virtual void putdata() {}
+};
 
-int main() {
-    int x=1,y=2;
-    swaps(x,y);
-    cout<<x<<" "<<y;
+class book : public publication
+{
+    int pages;
+public:
+    void getdata()
+    {
+        cin.ignore();
+        getline(cin, title);
+        cin >> price >> pages;
+    }
+    void putdata()
+    {
+        cout << title << " " << price << " " << pages;
+        if(isOversize())
+            cout << " Oversize";
+        cout << endl;
+    }
+    bool isOversize()
+    {
+        return pages > 800;
+    }
+};
+
+class tape : public publication
+{
+    float minutes;
+public:
+    void getdata()
+    {
+        cin.ignore();
+        getline(cin, title);
+        cin >> price >> minutes;
+    }
+    void putdata()
+    {
+        cout << title << " " << price << " " << minutes;
+        if(isOversize())
+            cout << " Oversize";
+        cout << endl;
+    }
+    bool isOversize()
+    {
+        return minutes > 90;
+    }
+};
+
+int main()
+{
+    publication* p = new book;
+    p->getdata();
+    p->putdata();
+    return 0;
 }

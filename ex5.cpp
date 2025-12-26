@@ -2,15 +2,33 @@
 #include <iostream>
 using namespace std;
 
-template <class T>
-T amax(T arr[], int size) {
-    T m=arr[0];
-    for(int i=1;i<size;i++)
-        if(arr[i]>m) m=arr[i];
-    return m;
+class bMoney
+{
+    long double amount;
+public:
+    bMoney(long double a = 0) : amount(a) {}
+    friend bMoney operator*(long double, bMoney);
+    friend bMoney operator/(long double, bMoney);
+    void show()
+    {
+        cout << amount << endl;
+    }
+};
+
+bMoney operator*(long double x, bMoney m)
+{
+    return bMoney(x * m.amount);
 }
 
-int main() {
-    int a[]={1,5,3};
-    cout<<amax(a,3);
+bMoney operator/(long double x, bMoney m)
+{
+    return bMoney(x / m.amount);
+}
+
+int main()
+{
+    bMoney m(50);
+    (2.0 * m).show();
+    (100.0 / m).show();
+    return 0;
 }

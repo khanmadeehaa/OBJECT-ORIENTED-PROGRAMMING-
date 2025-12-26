@@ -2,19 +2,36 @@
 #include <iostream>
 using namespace std;
 
-template <class T>
-class frac {
-    T n,d;
+class Token
+{
 public:
-    frac(T n=0,T d=1):n(n),d(d){}
-    frac operator+(frac f) {
-        return frac(n*f.d + f.n*d, d*f.d);
-    }
-    void show() { cout<<n<<"/"<<d; }
+    virtual float getNumber() = 0;
+    virtual char getOperator() = 0;
+    virtual ~Token() {}
 };
 
-int main() {
-    frac<char> a(1,2), b(1,3);
-    frac<char> c = a+b;
-    c.show();
+class Operator : public Token
+{
+    char op;
+public:
+    Operator(char c) : op(c) {}
+    char getOperator() { return op; }
+    float getNumber() { return 0; }
+};
+
+class Number : public Token
+{
+    float num;
+public:
+    Number(float n) : num(n) {}
+    float getNumber() { return num; }
+    char getOperator() { return 0; }
+};
+
+int main()
+{
+    Token* t1 = new Number(3.14f);
+    Token* t2 = new Operator('+');
+    cout << t1->getNumber() << " " << t2->getOperator() << endl;
+    return 0;
 }

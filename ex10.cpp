@@ -1,82 +1,18 @@
+
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-class employee
-{
-protected:
-    int empno;
-    float salary;
-
+class DistanceError {
 public:
-    void getdata()
-    {
-        cout << "Enter employee number: ";
-        cin >> empno;
-        cout << "Enter salary: ";
-        cin >> salary;
-    }
-
-    void putdata() const
-    {
-        cout << "Employee number: " << empno << endl;
-        cout << "Salary: " << salary << endl;
-    }
+    string msg;
+    DistanceError(string m):msg(m){}
 };
 
-class manager : public employee
-{
-protected:
-    int dues;
-
-public:
-    void getdata()
-    {
-        employee::getdata();
-        cout << "Enter club dues: ";
-        cin >> dues;
+int main() {
+    try {
+        throw DistanceError("Invalid inches");
+    } catch(DistanceError e) {
+        cout<<e.msg;
     }
-
-    void putdata() const
-    {
-        employee::putdata();
-        cout << "Club dues: " << dues << endl;
-    }
-};
-
-class executive : public manager
-{
-private:
-    double bonus;
-    int shares;
-
-public:
-    void getdata()
-    {
-        manager::getdata();
-        cout << "Enter yearly bonus: ";
-        cin >> bonus;
-        cout << "Enter number of shares: ";
-        cin >> shares;
-    }
-
-    void putdata() const
-    {
-        manager::putdata();
-        cout << "Yearly bonus: " << bonus << endl;
-        cout << "Stock shares: " << shares << endl;
-    }
-};
-
-int main()
-{
-    executive e;
-
-    cout << "\nEnter Executive Details\n";
-    e.getdata();
-
-    cout << "\nExecutive Information\n";
-    e.putdata();
-
-    return 0;
 }
-

@@ -1,85 +1,22 @@
+
 #include <iostream>
 using namespace std;
 
-class publication
-{
-protected:
-    char title[50];
-    float price;
-
-public:
-    void getdata()
-    {
-        cout << "Enter title: ";
-        cin >> title;
-        cout << "Enter price: ";
-        cin >> price;
-    }
-
-    void putdata()
-    {
-        cout << "Title: " << title << endl;
-        cout << "Price: " << price << endl;
-    }
-};
-
-class book : public publication
-{
-private:
-    int pages;
-
-public:
-    void getdata()
-    {
-        publication::getdata();
-        cout << "Enter number of pages: ";
-        cin >> pages;
-    }
-
-    void putdata()
-    {
-        publication::putdata();
-        cout << "Pages: " << pages << endl;
-    }
-};
-
-class tape : public publication
-{
-private:
-    float playtime;
-
-public:
-    void getdata()
-    {
-        publication::getdata();
-        cout << "Enter playing time (minutes): ";
-        cin >> playtime;
-    }
-
-    void putdata()
-    {
-        publication::putdata();
-        cout << "Playing time: " << playtime << " minutes" << endl;
-    }
-};
-
-int main()
-{
-    book b;
-    tape t;
-
-    cout << "\nEnter Book Details\n";
-    b.getdata();
-
-    cout << "\nEnter Tape Details\n";
-    t.getdata();
-
-    cout << "\nBook Information\n";
-    b.putdata();
-
-    cout << "\nTape Information\n";
-    t.putdata();
-
-    return 0;
+template <class T>
+double average(T arr[], int size) {
+    double sum = 0;
+    for(int i=0;i<size;i++) sum += arr[i];
+    return sum/size;
 }
 
+int main() {
+    int a[] = {1,2,3,4};
+    long b[] = {10,20,30};
+    double c[] = {1.1,2.2,3.3};
+    char d[] = {'a','b','c'};
+
+    cout << average(a,4) << endl;
+    cout << average(b,3) << endl;
+    cout << average(c,3) << endl;
+    cout << average(d,3) << endl;
+}

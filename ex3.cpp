@@ -1,111 +1,32 @@
+
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
-class publication
-{
-protected:
-    char title[50];
-    float price;
-
+template <class T>
+class Queue {
+    T* arr;
+    int head, tail, count, size;
 public:
-    void getdata()
-    {
-        cout << "Enter title: ";
-        cin >> title;
-        cout << "Enter price: ";
-        cin >> price;
+    Queue(int s):size(s),head(0),tail(0),count(0) {
+        arr=new T[size];
     }
-
-    void putdata()
-    {
-        cout << "Title: " << title << endl;
-        cout << "Price: " << price << endl;
+    void push(T v) {
+        if(count==size) throw runtime_error("Queue Full");
+        arr[tail++]=v; tail%=size; count++;
+    }
+    T pop() {
+        if(count==0) throw runtime_error("Queue Empty");
+        T v=arr[head++]; head%=size; count--;
+        return v;
     }
 };
 
-class sales
-{
-protected:
-    float sale[3];
-
-public:
-    void getdata()
-    {
-        cout << "Enter sales for last 3 months:\n";
-        for (int i = 0; i < 3; i++)
-            cin >> sale[i];
+int main() {
+    Queue<int> q(2);
+    try {
+        q.push(1); q.push(2); q.push(3);
+    } catch(exception& e) {
+        cout<<e.what()<<endl;
     }
-
-    void putdata()
-    {
-        cout << "Sales: ";
-        for (int i = 0; i < 3; i++)
-            cout << sale[i] << " ";
-        cout << endl;
-    }
-};
-
-class book : public publication, public sales
-{
-private:
-    int pages;
-
-public:
-    void getdata()
-    {
-        publication::getdata();
-        cout << "Enter number of pages: ";
-        cin >> pages;
-        sales::getdata();
-    }
-
-    void putdata()
-    {
-        publication::putdata();
-        cout << "Pages: " << pages << endl;
-        sales::putdata();
-    }
-};
-
-class tape : public publication, public sales
-{
-private:
-    float playtime;
-
-public:
-    void getdata()
-    {
-        publication::getdata();
-        cout << "Enter playing time (minutes): ";
-        cin >> playtime;
-        sales::getdata();
-    }
-
-    void putdata()
-    {
-        publication::putdata();
-        cout << "Playing time: " << playtime << endl;
-        sales::putdata();
-    }
-};
-
-int main()
-{
-    book b;
-    tape t;
-
-    cout << "\nEnter Book Details\n";
-    b.getdata();
-
-    cout << "\nEnter Tape Details\n";
-    t.getdata();
-
-    cout << "\nBook Information\n";
-    b.putdata();
-
-    cout << "\nTape Information\n";
-    t.putdata();
-
-    return 0;
 }
-
